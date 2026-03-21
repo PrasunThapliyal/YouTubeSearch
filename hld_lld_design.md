@@ -8,16 +8,16 @@ The application follows a **microservices architecture**, decoupling the user in
 
 ```mermaid
 flowchart TD
-    Browser[Web Browser]
-    Gateway[API Gateway / Reverse Proxy\n(e.g., Nginx, YARP, or Kubernetes Ingress)\nhttp://localhost:8080]
+    Browser["Web Browser"]
+    Gateway["API Gateway / Reverse Proxy\n(e.g., Nginx, YARP, or Kubernetes Ingress)\nhttp://localhost:8080"]
     
-    UI[UI Service\nReact + Vite\nhttp://localhost:3000]
-    AuthService[Auth Service\n.NET 8 API\nhttp://localhost:5001]
-    YTService[YouTube Search Service\n.NET 8 API\nhttp://localhost:5002]
+    UI["UI Service\nReact + Vite\nhttp://localhost:3000"]
+    AuthService["Auth Service\n.NET 8 API\nhttp://localhost:5001"]
+    YTService["YouTube Search Service\n.NET 8 API\nhttp://localhost:5002"]
     
-    DB[(PostgreSQL Database)]
-    GoogleAuth[Google OAuth 2.0]
-    YouTubeAPI[YouTube Data API v3]
+    DB[("PostgreSQL Database")]
+    GoogleAuth["Google OAuth 2.0"]
+    YouTubeAPI["YouTube Data API v3"]
 
     Browser <-->|Traffic| Gateway
     Gateway <-->|/| UI
