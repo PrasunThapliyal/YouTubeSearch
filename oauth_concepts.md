@@ -12,7 +12,31 @@ OAuth (Open Authorization) 2.0 is an industry-standard protocol for **authorizat
 4. **Resource Server:** Google's YouTube API servers.
 
 ## The Flow: "Authorization Code Flow"
-We are using the most secure flow, strictly designed for applications with a backend server. Here is how it works step-by-step in our app:
+We are using the most secure flow, strictly designed for applications with a backend server. Here is how it works visually:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant U as User (Browser)
+    participant UI as React UI
+    participant API as .NET Auth Service
+    participant G as Google OAuth Server
+    
+    U->>UI: Clicks "Login"
+    UI->>API: GET /api/auth/login
+    API->>U: Redirects to Google's Consent Screen
+    U->>G: User logs in & grants permission
+    G->>API: Redirects to backend with Authorization Code
+    Note over API,G: Backend-to-Backend secure HTTP call
+    API->>G: Exchanges Auth Code + Client Secret for Tokens
+    G-->>API: Returns Google Access Token & Refresh Token
+    API->>API: Saves Tokens in PostgreSQL Database
+    API->>UI: Issues JWT Token (Redirects to Dashboard)
+    UI->>UI: Saves JWT in LocalStorage
+    Note over U,API: Future API requests securely send JWT
+```
+
+Here is how it works step-by-step in our app:
 
 1. **The Request:** The user clicks "Login" on the React frontend. The frontend redirects them to the .NET backend (`/api/auth/login`).
 2. **The Redirect:** The .NET backend redirects the user to Google's specific login page, passing along our `Client ID` and asking for the `youtube.readonly` **scope**.
