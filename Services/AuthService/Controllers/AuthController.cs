@@ -75,7 +75,7 @@ public class AuthController : ControllerBase
         var jwtToken = GenerateJwtToken(user);
 
         // Redirect to UI with token
-        return Redirect($"http://localhost:3000/?token={jwtToken}");
+        return Redirect($"http://localhost:8080/?token={jwtToken}");
     }
 
     private string GenerateJwtToken(User user)
